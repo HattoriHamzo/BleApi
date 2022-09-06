@@ -1,0 +1,40 @@
+/---GET METHODS---/
+
+GetAllProducts
+GetAllProviders
+GetAllShipments
+
+GetProductsById
+GetProvidersById
+GetShipmentsById
+
+GetProductsByName (searchBar)
+GetProdiversByName (searchBar)
+GetShipmentsByName (searchBar)
+
+GetShipmentsByDate (searchBar)
+
+/---POST METHODS---/
+
+CreateProduct
+CreateProvider
+CreateShipment (It can be created by himself)
+
+/---PUT METHODS---/
+
+UpdateProductName
+UpdateProductStock
+UpdateProductPrice
+UpdateProductImage
+
+UpdateProviderName
+UpdateProviderMail
+UpdateProviderPhone
+
+/---DELETE METHODS---/
+
+DeleteProduct
+DeleteProvider
+
+
+

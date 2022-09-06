@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "bKtMP0xHu4r+St90qQ467cJ/8eLBBhp1kiF/7yu5elk=",
+  "Source": "BleApi",
+  "BasePath": "_content/BleApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
