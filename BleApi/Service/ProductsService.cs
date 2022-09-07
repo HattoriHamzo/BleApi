@@ -102,7 +102,23 @@ namespace BleApi.Service
 
         public async Task<(bool isSuccess, ProductsDTO products, string errorMessage)> GetProductsByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var productById = await dbContext.Products.FirstOrDefaultAsync(p => p.product_id == id);
+
+                if (productById != null)
+                {
+                    var mappedProduct = mapper.Map<Products, ProductsDTO>(productById);
+                    return (true, mappedProduct, null);
+                }
+
+                return (false, null, "Not Found");
+            }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex.ToString());
+                return (false, null, ex.Message);
+            }
         }
 
         public async Task<(bool isSuccess, ProductsDTO products, string errorMessage)> GetProductsByNameAsync(string name)

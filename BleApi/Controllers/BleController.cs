@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BleApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("api/ble")]
     public class BleController : ControllerBase
     {
         private readonly IBleService bleService;
@@ -14,8 +14,7 @@ namespace BleApi.Controllers
             this.bleService = bleService;
         }
 
-        [HttpGet]
-        [ActionName("GetAllProducts")]
+        [HttpGet("/products")]
         public async Task<IActionResult> GetAllProductsAsync()
         {
             var allProducts = await bleService.GetAllProductsAsync();
@@ -28,8 +27,7 @@ namespace BleApi.Controllers
             return NotFound();
         }
 
-        [HttpGet]
-        [ActionName("GetAllProviders")]
+        [HttpGet("/providers")]
         public async Task<IActionResult> GetAllProvidersAsync()
         {
             var allProviders = await bleService.GetAllProvidersAsync();
@@ -42,8 +40,7 @@ namespace BleApi.Controllers
             return NotFound();
         }
 
-        [HttpGet]
-        [ActionName("GetAllOrders")]
+        [HttpGet("/orders")]
         public async Task<IActionResult> GetAllOrdersAsync()
         {
             var allOrders = await bleService.GetAllOrdersAsync();
@@ -51,6 +48,19 @@ namespace BleApi.Controllers
             if (allOrders.isSuccess)
             {
                 return Ok(allOrders.orders);
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet("/products/{id}")]
+        public async Task<IActionResult> GetProductsByIdAsync(int id)
+        {
+            var productById = await bleService.GetProductsByIdAsync(id);
+
+            if (productById.isSuccess)
+            {
+                return Ok(productById.products);
             }
 
             return NotFound();
