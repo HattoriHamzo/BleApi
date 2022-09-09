@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qhgj1Sv724b6MlyakjlAk0p9Qrl8jRvLWC+aNBGWX23IHPWMy1XNatngaDgWbYC/e+tYKRFnlen0SzaqDPDpEQ==",
+  "dgSpecHash": "qlChVOp40sdGk0uCZlqAVzunrJiMo7QI8e4ILDBhJjCl9P1V6mGWAO1ibMTMcn0cALY5stoeiM8keezKWWgPSg==",
   "success": true,
   "projectFilePath": "C:\\BleApi\\BleApi\\BleApi.csproj",
   "expectedPackageFiles": [
@@ -43,7 +43,8 @@
     "C:\\Users\\luis.lopez\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
     "C:\\Users\\luis.lopez\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\luis.lopez\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
-    "C:\\Users\\luis.lopez\\.nuget\\packages\\system.text.json\\6.0.0\\system.text.json.6.0.0.nupkg.sha512"
+    "C:\\Users\\luis.lopez\\.nuget\\packages\\system.text.json\\6.0.0\\system.text.json.6.0.0.nupkg.sha512",
+    "C:\\Users\\luis.lopez\\.nuget\\packages\\wtelegramclient\\2.6.3\\wtelegramclient.2.6.3.nupkg.sha512"
   ],
   "logs": []
 }

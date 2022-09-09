@@ -13,6 +13,7 @@ namespace BleApi.Service
         private readonly ILogger<ProductsService> logger;
         private readonly IMapper mapper;
 
+
         public ProductsService(BleDbContext dbContext, ILogger<ProductsService> logger, IMapper mapper)
         {
             this.dbContext = dbContext;
@@ -29,6 +30,7 @@ namespace BleApi.Service
                 if (allOrders != null && allOrders.Any())
                 {
                     var ordersMapped = mapper.Map<IEnumerable<BleApi.Model.Orders>, IEnumerable<OrdersDTO>>(allOrders);
+                    
                     return (true, ordersMapped, "");
                 }
 
@@ -50,7 +52,7 @@ namespace BleApi.Service
                 if (allProducts != null && allProducts.Any())
                 {
                     var mappedProducts = mapper.Map<IEnumerable<BleApi.Model.Products>, IEnumerable<ProductsDTO>>(allProducts);
-
+                    
                     return (true, mappedProducts, "");
                 }
                 return (false, null, "You don't have any products at the moment, products not found");
@@ -87,12 +89,40 @@ namespace BleApi.Service
 
         public async Task<(bool isSuccess, OrdersDTO orders, string errorMessage)> GetOrdersByDateAsync(DateOnly date)
         {
-            throw new NotImplementedException();
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                
+                throw;
+            }
         }
 
         public async Task<(bool isSuccess, OrdersDTO orders, string errorMessage)> GetOrdersByIdAsync(int id)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                var orderByIdAsync = await dbContext.Orders.FirstOrDefaultAsync(orders => orders.order_id == id);
+
+                if (orderByIdAsync != null)
+                {
+                    var mappedOrder = mapper.Map<Orders, OrdersDTO>(orderByIdAsync);
+
+                    return(true, mappedOrder, "");
+                }
+
+                return(false, null, "Not Found");
+            }
+            catch (Exception ex)
+            {
+
+                logger?.LogError(ex.ToString());
+
+                return (false, null, ex.Message);
+            }
         }
 
         public async Task<(bool isSuccess, OrdersDTO orders, string errorMessage)> GetOrdersByNameAsync(string name)
@@ -104,11 +134,12 @@ namespace BleApi.Service
         {
             try
             {
-                var productById = await dbContext.Products.FirstOrDefaultAsync(p => p.product_id == id);
+                var productById = await dbContext.Products.FirstOrDefaultAsync(product => product.product_id == id);
 
                 if (productById != null)
                 {
                     var mappedProduct = mapper.Map<Products, ProductsDTO>(productById);
+
                     return (true, mappedProduct, null);
                 }
 
@@ -121,14 +152,50 @@ namespace BleApi.Service
             }
         }
 
-        public async Task<(bool isSuccess, ProductsDTO products, string errorMessage)> GetProductsByNameAsync(string name)
+        public async Task<(bool isSuccess, IEnumerable<ProductsDTO> products, string errorMessage)> GetProductsByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var searchByName = dbContext.Products.Where(n => n.procuct_name.Contains(name));
+                var productsByName = await searchByName.ToListAsync();
+
+                if (productsByName != null)
+                {
+                    var mappedProducts = mapper.Map<IEnumerable<Products>, IEnumerable<ProductsDTO>>(productsByName);
+                    
+                    return(true, mappedProducts, "");
+                }
+
+                return(false, null, "Not Found");
+            }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex.ToString());
+                return (false, null, ex.Message);
+            }
         }
 
         public async Task<(bool isSuccess, ProvidersDTO providers, string errorMessage)> GetProvidersByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var providerById = await dbContext.Providers.FirstOrDefaultAsync(providers => providers.provider_id == id );
+
+                if (providerById != null)
+                {
+                    var mappedProvider = mapper.Map<Providers, ProvidersDTO>(providerById);
+
+                    return(true, mappedProvider, "");
+                }
+
+                return(false, null, "Not Found");
+            }
+            catch (Exception ex)
+            {
+                
+                logger?.LogError(ex.ToString());
+                return (false, null, ex.Message);
+            }
         }
 
         public async Task<(bool isSuccess, ProvidersDTO providers, string errorMessage)> GetProvidersByNameAsync(string name)

@@ -110,3 +110,4 @@ C:\BleApi\BleApi\obj\Debug\net6.0\refint\BleApi.dll
 C:\BleApi\BleApi\obj\Debug\net6.0\BleApi.pdb
 C:\BleApi\BleApi\obj\Debug\net6.0\BleApi.genruntimeconfig.cache
 C:\BleApi\BleApi\obj\Debug\net6.0\ref\BleApi.dll
+C:\BleApi\BleApi\bin\Debug\net6.0\WTelegramClient.dll

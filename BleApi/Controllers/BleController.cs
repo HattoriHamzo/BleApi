@@ -14,7 +14,7 @@ namespace BleApi.Controllers
             this.bleService = bleService;
         }
 
-        [HttpGet("/products")]
+        [HttpGet("products")]
         public async Task<IActionResult> GetAllProductsAsync()
         {
             var allProducts = await bleService.GetAllProductsAsync();
@@ -27,7 +27,7 @@ namespace BleApi.Controllers
             return NotFound();
         }
 
-        [HttpGet("/providers")]
+        [HttpGet("providers")]
         public async Task<IActionResult> GetAllProvidersAsync()
         {
             var allProviders = await bleService.GetAllProvidersAsync();
@@ -40,7 +40,7 @@ namespace BleApi.Controllers
             return NotFound();
         }
 
-        [HttpGet("/orders")]
+        [HttpGet("orders")]
         public async Task<IActionResult> GetAllOrdersAsync()
         {
             var allOrders = await bleService.GetAllOrdersAsync();
@@ -53,7 +53,7 @@ namespace BleApi.Controllers
             return NotFound();
         }
 
-        [HttpGet("/products/{id}")]
+        [HttpGet("products/{id}")]
         public async Task<IActionResult> GetProductsByIdAsync(int id)
         {
             var productById = await bleService.GetProductsByIdAsync(id);
@@ -61,6 +61,32 @@ namespace BleApi.Controllers
             if (productById.isSuccess)
             {
                 return Ok(productById.products);
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet("providers/{id}")]
+        public async Task<IActionResult> GetProvidersByIdAsync(int id)
+        {
+            var providerById = await bleService.GetProvidersByIdAsync(id);
+
+            if (providerById.isSuccess)
+            {
+                return Ok(providerById.providers);
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet("products/name/{name}")]
+        public async Task<IActionResult> GetProductsByName(string name)
+        {
+            var productsByname = await bleService.GetProductsByNameAsync(name);
+
+            if (productsByname.isSuccess)
+            {
+                return Ok(productsByname.products);
             }
 
             return NotFound();

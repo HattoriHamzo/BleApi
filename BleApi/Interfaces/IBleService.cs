@@ -14,7 +14,7 @@ namespace BleApi.Interfaces
         Task<(bool isSuccess, ProvidersDTO providers, string errorMessage)>GetProvidersByIdAsync(int id);
         Task<(bool isSuccess, OrdersDTO orders, string errorMessage)>GetOrdersByIdAsync(int id);
 
-        Task<(bool isSuccess, ProductsDTO products, string errorMessage)>GetProductsByNameAsync(string name);
+        Task<(bool isSuccess, IEnumerable<ProductsDTO> products, string errorMessage)>GetProductsByNameAsync(string name);
         Task<(bool isSuccess, ProvidersDTO providers, string errorMessage)>GetProvidersByNameAsync(string name);
         Task<(bool isSuccess, OrdersDTO orders, string errorMessage)>GetOrdersByNameAsync(string name);
         Task<(bool isSuccess, OrdersDTO orders, string errorMessage)>GetOrdersByDateAsync(DateOnly date);
