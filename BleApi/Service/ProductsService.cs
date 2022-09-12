@@ -87,18 +87,29 @@ namespace BleApi.Service
             }
         }
 
-        public async Task<(bool isSuccess, OrdersDTO orders, string errorMessage)> GetOrdersByDateAsync(DateOnly date)
+
+/*         public async Task<(bool isSuccess, IEnumerable<OrdersDTO> orders, string errorMessage)> GetOrdersByDateAsync(string date)
         {
             try
             {
-                throw new NotImplementedException();
+                var searchOrdersByDate = dbContext.Orders.Where(orders => orders.order_date.ToString().Contains(date));
+                var ordersByDate = await searchOrdersByDate.ToListAsync();
+
+                if (ordersByDate != null)
+                {
+                    var mappedOrders = mapper.Map<IEnumerable<Orders>, IEnumerable<OrdersDTO>>(ordersByDate);
+
+                    return(true, mappedOrders, "");
+                }
+
+                return(false, null, "Not Found");
             }
             catch (Exception ex)
             {
-                
-                throw;
+                logger?.LogError(ex.ToString());
+                return(false, null, ex.Message);
             }
-        }
+        } */
 
         public async Task<(bool isSuccess, OrdersDTO orders, string errorMessage)> GetOrdersByIdAsync(int id)
         {
@@ -125,9 +136,28 @@ namespace BleApi.Service
             }
         }
 
-        public async Task<(bool isSuccess, OrdersDTO orders, string errorMessage)> GetOrdersByNameAsync(string name)
+        public async Task<(bool isSuccess, IEnumerable<OrdersDTO> orders , string errorMessage)> GetOrdersByNameAsync(string name)
         {
-            throw new NotImplementedException();
+           try
+           {
+                var searchOrderByName = dbContext.Orders.Where(orders => orders.order_name.Contains(name));
+                var orderByName = await searchOrderByName.ToListAsync();
+
+                if (orderByName != null)
+                {
+                    var mappedOrder = mapper.Map<IEnumerable<Orders>, IEnumerable<OrdersDTO>>(orderByName);
+                    return(true, mappedOrder, "");
+                }
+
+                return(false, null, "Not Found");
+           }
+           catch (Exception ex)
+           {
+            
+                logger?.LogError(ex.ToString());
+                return(false, null, ex.Message);
+            
+           }
         }
 
         public async Task<(bool isSuccess, ProductsDTO products, string errorMessage)> GetProductsByIdAsync(int id)
@@ -198,9 +228,26 @@ namespace BleApi.Service
             }
         }
 
-        public async Task<(bool isSuccess, ProvidersDTO providers, string errorMessage)> GetProvidersByNameAsync(string name)
+        public async Task<(bool isSuccess, IEnumerable<ProvidersDTO> providers, string errorMessage)> GetProvidersByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var searchByName = dbContext.Providers.Where(provider => provider.provider_name.Contains(name));
+                var providerByName = await searchByName.ToListAsync();
+
+                if (providerByName != null)
+                {
+                    var mappedProvider = mapper.Map<IEnumerable<Providers>, IEnumerable<ProvidersDTO>>(providerByName);
+                    return(true, mappedProvider, "");
+                }
+
+                return(false, null, "Not Found");
+            }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex.ToString());
+                return(false, null, ex.Message);
+            }
         }
     }
 }

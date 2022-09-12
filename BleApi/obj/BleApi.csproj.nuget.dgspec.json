@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "C:\\BleApi\\BleApi\\BleApi.csproj": {}
+    "C:\\Users\\Pablo\\Desktop\\BleApi\\BleApi\\BleApi.csproj": {}
   },
   "projects": {
-    "C:\\BleApi\\BleApi\\BleApi.csproj": {
+    "C:\\Users\\Pablo\\Desktop\\BleApi\\BleApi\\BleApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\BleApi\\BleApi\\BleApi.csproj",
+        "projectUniqueName": "C:\\Users\\Pablo\\Desktop\\BleApi\\BleApi\\BleApi.csproj",
         "projectName": "BleApi",
-        "projectPath": "C:\\BleApi\\BleApi\\BleApi.csproj",
-        "packagesPath": "C:\\Users\\luis.lopez\\.nuget\\packages\\",
-        "outputPath": "C:\\BleApi\\BleApi\\obj\\",
+        "projectPath": "C:\\Users\\Pablo\\Desktop\\BleApi\\BleApi\\BleApi.csproj",
+        "packagesPath": "C:\\Users\\Pablo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Pablo\\Desktop\\BleApi\\BleApi\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\Microsoft VisualStudio Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\luis.lopez\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Pablo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -75,8 +81,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -88,7 +93,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

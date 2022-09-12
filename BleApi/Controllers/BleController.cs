@@ -79,8 +79,21 @@ namespace BleApi.Controllers
             return NotFound();
         }
 
+        [HttpGet("orders/{id}")]
+        public async Task<IActionResult> GetOrdersByIdAsync(int id)
+        {
+            var orderById = await bleService.GetOrdersByIdAsync(id);
+
+            if(orderById.isSuccess)
+            {
+                return Ok(orderById.orders);
+            }
+
+            return NotFound();
+        }
+
         [HttpGet("products/name/{name}")]
-        public async Task<IActionResult> GetProductsByName(string name)
+        public async Task<IActionResult> GetProductsByNameAsync(string name)
         {
             var productsByname = await bleService.GetProductsByNameAsync(name);
 
@@ -91,5 +104,44 @@ namespace BleApi.Controllers
 
             return NotFound();
         }
+
+        [HttpGet("providers/name/{name}")]
+        public async Task<IActionResult> GetProvidersByNameAsync(string name)
+        {
+            var providersByName = await bleService.GetProvidersByNameAsync(name);
+
+            if(providersByName.isSuccess)
+            {
+                return Ok(providersByName.providers);
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet("orders/name/{name}")]
+        public async Task<IActionResult> GetOrdersByNameAsync(string name)
+        {
+            var ordersByName = await bleService.GetOrdersByNameAsync(name);
+
+            if(ordersByName.isSuccess)
+            {
+                return Ok(ordersByName.orders);
+            }
+
+            return NotFound();
+        }
+
+        /*[HttpGet("orders/date/{date}")]
+        public async Task<IActionResult> GetOrdersByDateAsync(string date)
+        {
+            var ordersByDate = await bleService.GetOrdersByDateAsync(date);
+
+            if(ordersByDate.isSuccess)
+            {
+                return Ok(ordersByDate.orders);
+            }
+
+            return NotFound();
+        }*/
     }
 }
