@@ -1,4 +1,5 @@
 using BleApi.Interfaces;
+using BleApi.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BleApi.Controllers
@@ -7,17 +8,21 @@ namespace BleApi.Controllers
     [Route("api/ble")]
     public class BleController : ControllerBase
     {
-        private readonly IBleService bleService;
+        private readonly IProductsService productsService;
+        private readonly IProvidersService providersService;
+        private readonly IOrdersService ordersService;
 
-        public BleController(IBleService bleService)
+        public BleController(IProductsService productsService, IProvidersService providersService, IOrdersService ordersService)
         {
-            this.bleService = bleService;
+            this.productsService = productsService;
+            this.providersService = providersService;
+            this.ordersService = ordersService;
         }
 
         [HttpGet("products")]
         public async Task<IActionResult> GetAllProductsAsync()
         {
-            var allProducts = await bleService.GetAllProductsAsync();
+            var allProducts = await productsService.GetAllProductsAsync();
 
             if (allProducts.isSuccess)
             {
@@ -30,7 +35,7 @@ namespace BleApi.Controllers
         [HttpGet("providers")]
         public async Task<IActionResult> GetAllProvidersAsync()
         {
-            var allProviders = await bleService.GetAllProvidersAsync();
+            var allProviders = await providersService.GetAllProvidersAsync();
 
             if(allProviders.isSuccess)
             {
@@ -43,7 +48,7 @@ namespace BleApi.Controllers
         [HttpGet("orders")]
         public async Task<IActionResult> GetAllOrdersAsync()
         {
-            var allOrders = await bleService.GetAllOrdersAsync();
+            var allOrders = await ordersService.GetAllOrdersAsync();
 
             if (allOrders.isSuccess)
             {
@@ -53,10 +58,10 @@ namespace BleApi.Controllers
             return NotFound();
         }
 
-        [HttpGet("products/{id}")]
+        [HttpGet("products/searchID/{id}")]
         public async Task<IActionResult> GetProductsByIdAsync(int id)
         {
-            var productById = await bleService.GetProductsByIdAsync(id);
+            var productById = await productsService.GetProductsByIdAsync(id);
 
             if (productById.isSuccess)
             {
@@ -66,10 +71,10 @@ namespace BleApi.Controllers
             return NotFound();
         }
 
-        [HttpGet("providers/{id}")]
+        [HttpGet("providers/searchID/{id}")]
         public async Task<IActionResult> GetProvidersByIdAsync(int id)
         {
-            var providerById = await bleService.GetProvidersByIdAsync(id);
+            var providerById = await providersService.GetProvidersByIdAsync(id);
 
             if (providerById.isSuccess)
             {
@@ -79,10 +84,10 @@ namespace BleApi.Controllers
             return NotFound();
         }
 
-        [HttpGet("orders/{id}")]
+        [HttpGet("orders/searchID/{id}")]
         public async Task<IActionResult> GetOrdersByIdAsync(int id)
         {
-            var orderById = await bleService.GetOrdersByIdAsync(id);
+            var orderById = await ordersService.GetOrdersByIdAsync(id);
 
             if(orderById.isSuccess)
             {
@@ -92,10 +97,10 @@ namespace BleApi.Controllers
             return NotFound();
         }
 
-        [HttpGet("products/name/{name}")]
+        [HttpGet("products/searchName/{name}")]
         public async Task<IActionResult> GetProductsByNameAsync(string name)
         {
-            var productsByname = await bleService.GetProductsByNameAsync(name);
+            var productsByname = await productsService.GetProductsByNameAsync(name);
 
             if (productsByname.isSuccess)
             {
@@ -105,10 +110,10 @@ namespace BleApi.Controllers
             return NotFound();
         }
 
-        [HttpGet("providers/name/{name}")]
+        [HttpGet("providers/searchName/{name}")]
         public async Task<IActionResult> GetProvidersByNameAsync(string name)
         {
-            var providersByName = await bleService.GetProvidersByNameAsync(name);
+            var providersByName = await providersService.GetProvidersByNameAsync(name);
 
             if(providersByName.isSuccess)
             {
@@ -118,10 +123,10 @@ namespace BleApi.Controllers
             return NotFound();
         }
 
-        [HttpGet("orders/name/{name}")]
+        [HttpGet("orders/searchName/{name}")]
         public async Task<IActionResult> GetOrdersByNameAsync(string name)
         {
-            var ordersByName = await bleService.GetOrdersByNameAsync(name);
+            var ordersByName = await ordersService.GetOrdersByNameAsync(name);
 
             if(ordersByName.isSuccess)
             {
@@ -131,10 +136,49 @@ namespace BleApi.Controllers
             return NotFound();
         }
 
+        [HttpPost("product/create")]
+        public async Task<IActionResult> CreateProductAsync(ProductsDTO product)
+        {
+            var createProduct = await productsService.CreateProductAsync(product);
+
+            if (createProduct.isSuccess)
+            {
+                return Ok(createProduct.statusMessage);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost("provider/create")]
+        public async Task<IActionResult> CreateProviderAsync(ProvidersDTO provider)
+        {
+            var createProvider = await providersService.CreateProviderAsync(provider);
+
+            if (createProvider.isSuccess)
+            {
+                return Ok(createProvider.statusMessage);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost("order/create")]
+        public async Task<IActionResult> CreateOrderAsync(OrdersDTO order)
+        {
+            var createProvider = await ordersService.CreateOrderAsync(order);
+
+            if (createProvider.isSuccess)
+            {
+                return Ok(createProvider.statusMessage);
+            }
+
+            return BadRequest();
+        }
+
         /*[HttpGet("orders/date/{date}")]
         public async Task<IActionResult> GetOrdersByDateAsync(string date)
         {
-            var ordersByDate = await bleService.GetOrdersByDateAsync(date);
+            var ordersByDate = await ordersService.GetOrdersByDateAsync(date);
 
             if(ordersByDate.isSuccess)
             {

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BleApi.Service
 {
-    class ProductsService : IBleService
+    class ProductsService : IProductsService
     {
         private readonly BleDbContext dbContext;
         private readonly ILogger<ProductsService> logger;
@@ -19,28 +19,6 @@ namespace BleApi.Service
             this.dbContext = dbContext;
             this.logger = logger;
             this.mapper = mapper;
-        }
-
-        public async Task<(bool isSuccess, IEnumerable<OrdersDTO> orders, string errorMessage)> GetAllOrdersAsync()
-        {
-            try
-            {
-                var allOrders = await dbContext.Orders.ToListAsync();
-
-                if (allOrders != null && allOrders.Any())
-                {
-                    var ordersMapped = mapper.Map<IEnumerable<BleApi.Model.Orders>, IEnumerable<OrdersDTO>>(allOrders);
-                    
-                    return (true, ordersMapped, "");
-                }
-
-                return(false, null, "You don't have any orders at the moment, orders not found");
-            }
-            catch (Exception ex)
-            {
-                logger?.LogError(ex.ToString());
-                return(false, null, ex.Message);
-            }
         }
 
         public async Task<(bool isSuccess, IEnumerable<ProductsDTO> products, string errorMessage)> GetAllProductsAsync()
@@ -63,101 +41,6 @@ namespace BleApi.Service
                 
                 return (false, null, ex.Message);
             }
-        }
-
-        public async Task<(bool isSuccess, IEnumerable<ProvidersDTO> providers, string errorMessage)> GetAllProvidersAsync()
-        {
-            try
-            {
-                var allProviders = await dbContext.Providers.ToListAsync();
-
-                if (allProviders != null && allProviders.Any())
-                {
-                    var mappedProviders = mapper.Map<IEnumerable<BleApi.Model.Providers>, IEnumerable<ProvidersDTO>>(allProviders);
-
-                    return (true, mappedProviders, "");
-                }
-                return (false, null, "You don't have any providers at the moment, providers not found");
-            }
-            catch (Exception ex)
-            {
-                logger?.LogError(ex.ToString());
-                
-                return (false, null, ex.Message);
-            }
-        }
-
-
-/*         public async Task<(bool isSuccess, IEnumerable<OrdersDTO> orders, string errorMessage)> GetOrdersByDateAsync(string date)
-        {
-            try
-            {
-                var searchOrdersByDate = dbContext.Orders.Where(orders => orders.order_date.ToString().Contains(date));
-                var ordersByDate = await searchOrdersByDate.ToListAsync();
-
-                if (ordersByDate != null)
-                {
-                    var mappedOrders = mapper.Map<IEnumerable<Orders>, IEnumerable<OrdersDTO>>(ordersByDate);
-
-                    return(true, mappedOrders, "");
-                }
-
-                return(false, null, "Not Found");
-            }
-            catch (Exception ex)
-            {
-                logger?.LogError(ex.ToString());
-                return(false, null, ex.Message);
-            }
-        } */
-
-        public async Task<(bool isSuccess, OrdersDTO orders, string errorMessage)> GetOrdersByIdAsync(int id)
-        {
-
-            try
-            {
-                var orderByIdAsync = await dbContext.Orders.FirstOrDefaultAsync(orders => orders.order_id == id);
-
-                if (orderByIdAsync != null)
-                {
-                    var mappedOrder = mapper.Map<Orders, OrdersDTO>(orderByIdAsync);
-
-                    return(true, mappedOrder, "");
-                }
-
-                return(false, null, "Not Found");
-            }
-            catch (Exception ex)
-            {
-
-                logger?.LogError(ex.ToString());
-
-                return (false, null, ex.Message);
-            }
-        }
-
-        public async Task<(bool isSuccess, IEnumerable<OrdersDTO> orders , string errorMessage)> GetOrdersByNameAsync(string name)
-        {
-           try
-           {
-                var searchOrderByName = dbContext.Orders.Where(orders => orders.order_name.Contains(name));
-                var orderByName = await searchOrderByName.ToListAsync();
-
-                if (orderByName != null)
-                {
-                    var mappedOrder = mapper.Map<IEnumerable<Orders>, IEnumerable<OrdersDTO>>(orderByName);
-                    return(true, mappedOrder, "");
-                }
-
-                return(false, null, "Not Found");
-           }
-           catch (Exception ex)
-           {
-            
-                logger?.LogError(ex.ToString());
-                return(false, null, ex.Message);
-            
-           }
         }
 
         public async Task<(bool isSuccess, ProductsDTO products, string errorMessage)> GetProductsByIdAsync(int id)
@@ -205,48 +88,25 @@ namespace BleApi.Service
             }
         }
 
-        public async Task<(bool isSuccess, ProvidersDTO providers, string errorMessage)> GetProvidersByIdAsync(int id)
+        public async Task<(bool isSuccess, string statusMessage)> CreateProductAsync(ProductsDTO product)
         {
             try
             {
-                var providerById = await dbContext.Providers.FirstOrDefaultAsync(providers => providers.provider_id == id );
+                var searchIfExists = dbContext.Products.Any(productsEntity => productsEntity.product_id == product.product_id);
 
-                if (providerById != null)
-                {
-                    var mappedProvider = mapper.Map<Providers, ProvidersDTO>(providerById);
-
-                    return(true, mappedProvider, "");
+                if (!searchIfExists)
+                {  
+                    var mappedProduct = mapper.Map<Products>(product);
+                        dbContext.Products.Add(mappedProduct);
+                        await dbContext.SaveChangesAsync();
+                    return (true, "Product Created");
                 }
-
-                return(false, null, "Not Found");
-            }
-            catch (Exception ex)
-            {
-                
-                logger?.LogError(ex.ToString());
-                return (false, null, ex.Message);
-            }
-        }
-
-        public async Task<(bool isSuccess, IEnumerable<ProvidersDTO> providers, string errorMessage)> GetProvidersByNameAsync(string name)
-        {
-            try
-            {
-                var searchByName = dbContext.Providers.Where(provider => provider.provider_name.Contains(name));
-                var providerByName = await searchByName.ToListAsync();
-
-                if (providerByName != null)
-                {
-                    var mappedProvider = mapper.Map<IEnumerable<Providers>, IEnumerable<ProvidersDTO>>(providerByName);
-                    return(true, mappedProvider, "");
-                }
-
-                return(false, null, "Not Found");
+                return (false, "Product Not Created");
             }
             catch (Exception ex)
             {
                 logger?.LogError(ex.ToString());
-                return(false, null, ex.Message);
+                return (false, ex.Message);
             }
         }
     }

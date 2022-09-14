@@ -1,5 +1,4 @@
 using AutoMapper;
-using BleApi.Model;
 using BleApi.Dtos;
 
 namespace BleApi.Profiles
@@ -11,6 +10,10 @@ namespace BleApi.Profiles
             CreateMap<Model.Products, ProductsDTO>();
             CreateMap<Model.Providers, ProvidersDTO>();
             CreateMap<Model.Orders, OrdersDTO>();
+
+            CreateMap<ProductsDTO, Model.Products>();
+            CreateMap<ProvidersDTO, Model.Providers>();
+            CreateMap<OrdersDTO, Model.Orders>();
         }
     }
 }

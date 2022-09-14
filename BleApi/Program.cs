@@ -11,7 +11,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IBleService, ProductsService>();
+builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<IProvidersService, ProvidersService>();
+builder.Services.AddScoped<IOrdersService, OrdersService>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddDbContext<BleDbContext>(options => {
     options.UseSqlite(connectionString);
