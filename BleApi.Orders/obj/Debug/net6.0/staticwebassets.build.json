@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "cZ8Sba5y+jdqW2ltsuw3M70IbghZDA6+qdyCDJIsiCI=",
+  "Source": "BleApi.Orders",
+  "BasePath": "_content/BleApi.Orders",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
