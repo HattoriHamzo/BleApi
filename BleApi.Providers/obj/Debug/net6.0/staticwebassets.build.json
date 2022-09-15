@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "HP4H8hcVaAV4C2SFqpg/Se1c69/YSJXl2zIPLw2SXLI=",
+  "Source": "BleApi.Providers",
+  "BasePath": "_content/BleApi.Providers",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
