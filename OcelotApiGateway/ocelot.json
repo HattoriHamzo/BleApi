@@ -1,0 +1,57 @@
+{
+    "Routes": [
+        {
+            "DownstreamPathTemplate": "/api/ble/products",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                "Host": "localhost",
+                "Port": 7033
+                }
+            ],
+            "UpstreamPathTemplate": "/products",
+            "UpstreamHttpMethod": ["Get"]
+        },
+
+        {
+            "DownstreamPathTemplate": "/api/ble/products/searchID/{id}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                "Host": "localhost",
+                "Port": 7033
+                }
+                ],
+                "UpstreamPathTemplate": "/products/searchID/{id}",
+                "UpstreamHttpMethod": ["Get"]
+        },
+
+        {
+            "DownstreamPathTemplate": "/api/ble/products/searchName/{name}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                "Host": "localhost",
+                "Port": 7033
+                }
+                ],
+                "UpstreamPathTemplate": "/products/searchName/{name}",
+                "UpstreamHttpMethod": ["Get"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/ble/products/create",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                "Host": "localhost",
+                "Port": 7033
+                }
+                ],
+                "UpstreamPathTemplate": "/products/create",
+                "UpstreamHttpMethod": ["Post"]
+        }
+    ],
+    "GlobalConfiguration": {
+        "BaseUrl": "https://localhost:7214"
+    }
+}
