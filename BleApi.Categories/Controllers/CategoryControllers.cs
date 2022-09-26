@@ -10,10 +10,12 @@ namespace BleApi.Categories.Controllers
     public class CategoryControllers : ControllerBase
     {
         private readonly ICategoriesService categoriesService;
+        private readonly IRabitMQProducer rabitMQProducer;
 
-        public CategoryControllers(ICategoriesService categoriesService)
+        public CategoryControllers(ICategoriesService categoriesService, IRabitMQProducer rabitMQProducer)
         {
             this.categoriesService = categoriesService;
+            this.rabitMQProducer = rabitMQProducer;
         }
 
         [HttpGet("categories")]
@@ -23,6 +25,7 @@ namespace BleApi.Categories.Controllers
 
             if (allCategories.isSuccess)
             {
+                rabitMQProducer.ReceiveProductCreatedQueueMessage();
                 return Ok(allCategories.categories);
             }
 

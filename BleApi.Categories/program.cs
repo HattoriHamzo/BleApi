@@ -1,5 +1,6 @@
 using BleApi.Categories.Interfaces;
 using BleApi.Categories.Service;
+using BleApi.Categories.RabbitMQ;
 using BleApi.Categories.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+builder.Services.AddScoped<IRabitMQProducer,  RabitMQProducer>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddDbContext<CategoriesDbContext>(options => {
     options.UseSqlite(connectionString);
