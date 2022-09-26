@@ -1,5 +1,6 @@
 using BleApi.Products.Interfaces;
 using BleApi.Products.Service;
+using BleApi.Products.AsyncDataServices;
 using BleApi.Products.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddDbContext<ProductsDbContext>(options => {
     options.UseSqlite(connectionString);

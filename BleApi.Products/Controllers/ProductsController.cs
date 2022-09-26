@@ -1,5 +1,6 @@
 using BleApi.Products.Interfaces;
 using BleApi.Products.Dtos;
+using BleApi.Products.AsyncDataServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BleApi.Products.Controllers
@@ -9,10 +10,11 @@ namespace BleApi.Products.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductsService productsService;
-
-        public ProductsController(IProductsService productsService)
+        private readonly IMessageBusClient messageBusClient;
+        public ProductsController(IProductsService productsService, IMessageBusClient messageBusClient)
         {
             this.productsService = productsService;
+            this.messageBusClient = messageBusClient;
         }
 
         [HttpGet("products")]
@@ -56,13 +58,14 @@ namespace BleApi.Products.Controllers
         }
 
 
-        [HttpPost("product/create")]
+        [HttpPost("products/create")]
         public async Task<IActionResult> CreateProductAsync(ProductsDTO product)
         {
             var createProduct = await productsService.CreateProductAsync(product);
 
             if (createProduct.isSuccess)
             {
+                //messageBusClient.PublishNewProduct(product);
                 return Ok(createProduct.statusMessage);
             }
 
